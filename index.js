@@ -22,6 +22,7 @@ const corsOptions = {
   origin: client, // Allow requests only from your Netlify-hosted client
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true, // Allow cookies to be sent with requests
+  optionsSuccessStatus: 204,
 };
 
 // Use CORS middleware with the defined options
