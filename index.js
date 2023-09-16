@@ -18,8 +18,17 @@ const jwtsec = process.env.JWT_KEY;
 const port = process.env.PORT || 5000;
 const client = process.env.CLIENT_URL;
 
+const corsOptions = {
+  origin: client, // Allow requests only from your Netlify-hosted client
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true, // Allow cookies to be sent with requests
+};
+
+// Use CORS middleware with the defined options
+app.use(cors(corsOptions));
+
 app.use(express.json());
-app.use(cors({ origin: client, methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', credentials: true }));
+// app.use(cors({ origin: client, methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', credentials: true }));
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'));
 
