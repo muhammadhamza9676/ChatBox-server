@@ -10,14 +10,16 @@ const ws = require('ws');
 const fs = require('fs');
 
 connectToMongo();
+require('dotenv').config();
 
 const app = express();
 const salt = bcrypt.genSaltSync(10);
 const jwtsec = process.env.JWT_KEY;
 const port = process.env.PORT || 5000;
+const client = process.env.CLIENT_URL;
 
 app.use(express.json());
-app.use(cors({ origin: process.env.CLIENT_URL, methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', credentials: true }));
+app.use(cors({ origin: client, methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', credentials: true }));
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'));
 
