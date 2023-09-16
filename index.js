@@ -25,14 +25,14 @@ const corsOptions = {
 };
 
 // Use CORS middleware with the defined options
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.use(express.json());
 // app.use(cors({ origin: client, methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', credentials: true }));
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'));
 
-app.get('/', (req, res) => {
+app.get('/', cors(corsOptions), (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', client);
   res.send('Hello World!');
 });
@@ -60,7 +60,7 @@ async function getUserDataFromReq(req) {
 }
 
 // Login endpoint with error handling
-app.post('/login', async (req, res) => {
+app.post('/login',cors(corsOptions), async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', client);
   const { username, password } = req.body;
   try {
@@ -91,7 +91,7 @@ app.post('/login', async (req, res) => {
 
 
 // Registration endpoint with error handling
-app.post('/register', async (req, res) => {
+app.post('/register',cors(corsOptions), async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', client);
   const { username, password } = req.body;
 
@@ -131,7 +131,7 @@ app.post('/register', async (req, res) => {
 
 
 // Profile endpoint with error handling
-app.get('/profile', async (req, res) => {
+app.get('/profile', cors(corsOptions), async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', client);
   try {
     const userData = await getUserDataFromReq(req);
@@ -152,13 +152,13 @@ app.get('/profile', async (req, res) => {
 
 
 // Logout endpoint
-app.post('/logout', (req, res) => {
+app.post('/logout', cors(corsOptions), (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', client);
   res.cookie('token', '', { sameSite: 'none', secure: true }).json('OK');
 });
 
 // Messages endpoint with error handling
-app.get('/messages/:userId', async (req, res) => {
+app.get('/messages/:userId', cors(corsOptions), async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', client);
   try {
     const { userId } = req.params;
@@ -176,7 +176,7 @@ app.get('/messages/:userId', async (req, res) => {
 });
 
 // People endpoint with error handling
-app.get('/people', async (req, res) => {
+app.get('/people', cors(corsOptions), async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', client);
   try {
     const users = await User.find({}, { '_id': 1, username: 1 });
