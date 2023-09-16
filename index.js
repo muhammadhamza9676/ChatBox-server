@@ -25,7 +25,7 @@ const corsOptions = {
 };
 
 // Use CORS middleware with the defined options
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use(express.json());
 // app.use(cors({ origin: client, methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', credentials: true }));
